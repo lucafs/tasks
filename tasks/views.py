@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
+from .forms import Form
 from tasks.models import Task
 from tasks.serializer import TaskSerializer
-from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
@@ -17,14 +17,26 @@ def get_tasks(request):
     serializer = TaskSerializer(tasks, many =True)
     return JsonResponse(serializer.data, safe =False)
 
+# @csrf_exempt
+# def post_task(request):
+#     if request.method == 'POST':
+#         data = JSONParser().parse(request)
+#         serial = TaskSerializer(data=data)
+#         if serial.is_valid():
+#             serial.save()
+#             return JsonResponse(serializer.data,status =201)
+#         else:
+#             return JsonResponse(serial.errors, status=400)
+#     else:
+#         return HttpResponse("...")
+
 @csrf_exempt
 def post_task(request):
     if request.method == 'POST':
-        data = JSONParser().parse(request)
-        serial = TaskSerializer(data=data)
-        if serial.is_valid():
-            serial.save()
-            return JsonResponse(serializer.data,status =201)
+        form = Form(request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse(form.data,status =201)
         else:
             return JsonResponse(serial.errors, status=400)
     else:

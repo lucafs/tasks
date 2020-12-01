@@ -22,11 +22,11 @@ def get_tasks(request):
 def post_task(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        serializer = TaskSerializer(data=data)
-        if form.is_valid():
-            form.save()
+        serial = TaskSerializer(data=data)
+        if serial.is_valid():
+            serial.save()
             return JsonResponse(serializer.data,status =201)
         else:
-            return JsonResponse({}, status=400)
+            return JsonResponse(serial.errors, status=400)
     else:
         return HttpResponse("...")

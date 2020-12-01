@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from .models import Task
 from .serializer import TaskSerializer
 from django.http import JsonResponse
-from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 

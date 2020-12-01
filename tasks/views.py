@@ -1,10 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
-
-from .models import Task
-from .serializer import TaskSerializer
-from django.http import JsonResponse
+from tasks.models import Task
+from tasks.serializer import TaskSerializer
+from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
